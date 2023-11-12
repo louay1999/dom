@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    
+</head>
+<body>
+
+<div class="cart-container" id="cartContainer">
+    
+    <div class="cart-item" id="item1">
+        <span>Item 1</span>
+        <div>
+            <button onclick="adjustQuantity('item1', -1)">-</button>
+            <span id="quantity_item1">1</span>
+            <button onclick="adjustQuantity('item1', 1)">+</button>
+            <button onclick="deleteItem('item1')">Delete</button>
+            
+        </div>
+        <span>$10</span>
+    </div>
+
+    <div class="cart-item" id="item2">
+        <span>Item 2</span>
+        <div>
+            <button onclick="adjustQuantity('item2', -1)">-</button>
+            <span id="quantity_item2">1</span>
+            <button onclick="adjustQuantity('item2', 1)">+</button>
+            <button onclick="deleteItem('item2')">Delete</button>
+        </div>
+        <span>$30</span>
+    </div>
+    
+    <div class="total-price" id="totalPrice">Total:$40 </div>
+</div>
+
+<script>
+    
+    let cartItems = {
+        item1: { quantity: 1, price: 10, liked: false },
+        item2: { quantity: 1, price: 30, liked: false }
+    }
+
+    
+    function adjustQuantity(itemId, amount) {
+        cartItems[itemId].quantity += amount;
+        if (cartItems[itemId].quantity < 1) {
+            cartItems[itemId].quantity = 1;
+        }
+        updateCart();
+    }
+
+
+    function deleteItem(itemId) {
+        delete cartItems[itemId];
+        updateCart();
+    }
+
+    
+
+    function updateCart() {
+        let totalPrice = 0;
+        for (let itemId in cartItems) {
+            const item = cartItems[itemId];
+            const itemElement = document.getElementById(itemId);
+           totalPrice += item.quantity * item.price;
+        }
+
+        const totalPriceElement = document.getElementById('totalPrice');
+        totalPriceElement.textContent = `Total: $${totalPrice}`;
+    }
+
+
+</script>
+
+</body>
+</html>
